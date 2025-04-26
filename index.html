@@ -247,11 +247,8 @@
     <!-- Active Player List (left side) -->
     <div class="player-list">
       <h2>Active Players</h2>
-      <ul>
-        <li>Player1</li>
-        <li>Player2</li>
-        <li>Player3</li>
-        <li>Player4</li>
+      <ul id="playerList">
+        <!-- Players will be populated here dynamically -->
       </ul>
     </div>
 
@@ -284,17 +281,48 @@
 </footer>
 
 <script>
-function copyIP() {
-  navigator.clipboard.writeText("play.frsmp.net")
-    .then(() => {
-      const button = document.getElementById('copyButton');
-      button.textContent = "Copied!";  // Change button text
-      setTimeout(() => {
-        button.textContent = "Copy IP";  // Revert back after 2 seconds
-      }, 2000);
-    })
-    .catch(() => alert('Failed to copy IP.'));
-}
+  // Function to fetch and display active players using MCAPI
+  function fetchActivePlayers() {
+    const serverIP = 'effect-walter.gl.joinmc.link'; // Your server's IP
+    const serverPort = 25565; // Default Minecraft port, change if necessary
+
+    fetch(`https://mcapi.us/server/status?ip=${serverIP}&port=${serverPort}`)
+      .then(response => response.json())
+      .then(data => {
+        const playerList = document.getElementById("playerList");
+        playerList.innerHTML = ""; // Clear existing list
+
+        if (data.online && data.players.now > 0) {
+          // Loop through players and display their names
+          data.players.list.forEach(player => {
+            const li = document.createElement("li");
+            li.textContent = player; // Add player name to the list
+            playerList.appendChild(li);
+          });
+        } else {
+          // If no players are online
+          const li = document.createElement("li");
+          li.textContent = "No players online";
+          playerList.appendChild(li);
+        }
+      })
+      .catch(err => console.error('Error fetching player list:', err));
+  }
+
+  // Load players when the page loads
+  window.onload = fetchActivePlayers;
+
+  function copyIP() {
+    navigator.clipboard.writeText("effect-walter.gl.joinmc.link")
+      .then(() => {
+        const button = document.getElementById('copyButton');
+        button.textContent = "Copied!";  // Change button text
+        setTimeout(() => {
+          button.textContent = "Copy IP";  // Revert back after 2 seconds
+        }, 2000);
+      })
+      .catch(() => alert('Failed to copy IP.'));
+  }
 </script>
 
 </body>
