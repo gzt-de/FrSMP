@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FrSMP - Minecraft Server</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e272e, #485460);
+      color: #fff;
+      overflow: hidden; /* Disable scrolling */
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 4rem 2rem;
+      background: url('https://images3.alphacoders.com/132/thumb-1920-1321959.png') no-repeat center center/cover;
+      position: relative;
+      animation: fadeIn 2s ease-out;
+      height: 35%; /* Adjust header height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center; /* Center text */
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      position: relative;
+      font-size: 6vw;
+      margin: 0;
+      z-index: 2;
+      animation: slideDown 1.5s ease-out;
+    }
+
+    header p {
+      position: relative;
+      font-size: 2.5vw;
+      margin-top: 1rem;
+      z-index: 2;
+      animation: slideUp 1.5s ease-out;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      flex: 1;
+      background: #2f3640;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); /* Subtle inner shadow */
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap; /* Allow content to wrap on small screens */
+      gap: 2rem;
+    }
+
+    /* Left Side (Player List) */
+    .player-list {
+      flex: 1;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #2f3640;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      transform: scale(0.9);
+      animation: popUp 1s ease forwards;
+      opacity: 0;
+      max-width: 400px;
+    }
+
+    .player-list h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .player-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .player-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .player-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Right Side (IP Box with Server Rules) */
+    .ip-box {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #2f3640;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      transform: scale(0.9);
+      animation: popUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    .ip-box button {
+      width: 100%;
+      padding: 1rem;
+      background: #00a8ff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .ip-box button:hover {
+      background: #0097e6;
+      transform: scale(1.05);
+    }
+
+    /* Server Rules inside the IP Box */
+    .server-rules {
+      margin-top: 2rem;
+    }
+
+    .server-rules h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #00a8ff; /* Highlighted color for rules */
+    }
+
+    .server-rules ul {
+      list-style: disc inside;
+      padding-left: 1.5rem;
+    }
+
+    .server-rules li {
+      padding: 0.5rem 0;
+    }
+
+    .about {
+      margin-top: 4rem;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      text-align: center;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 8vw; /* Adjust header font size */
+      }
+
+      header p {
+        font-size: 4vw; /* Adjust header text size */
+      }
+
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .player-list, .ip-box {
+        width: 90%; /* Allow elements to take up more space on small screens */
+        max-width: none;
+      }
+
+      .ip-box {
+        margin-top: 2rem;
+      }
+
+      footer {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 10vw; /* Further reduce font size on very small screens */
+      }
+
+      header p {
+        font-size: 5vw; /* Adjust text size for small screens */
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>FrSMP</h1>
+  <p>Join the ultimate Minecraft adventure</p>
+</header>
+
+<main>
+  <div class="container">
+    <!-- Active Player List (left side) -->
+    <div class="player-list">
+      <h2>Active Players</h2>
+      <ul>
+        <li>Player1</li>
+        <li>Player2</li>
+        <li>Player3</li>
+        <li>Player4</li>
+      </ul>
+    </div>
+
+    <!-- IP Box (right side) -->
+    <div class="ip-box">
+      <button id="copyButton" onclick="copyIP()">Copy IP</button>
+
+      <!-- Server Rules inside IP Box -->
+      <div class="server-rules">
+        <h3>Server Rules</h3>
+        <ul>
+          <li>No griefing or stealing from other players.</li>
+          <li>Respect all players and staff members.</li>
+          <li>Keep chat family-friendly.</li>
+          <li>No cheating or exploiting game mechanics.</li>
+          <li>Follow all server announcements and updates.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="about">
+  <h2>About FrSMP</h2>
+  <p>FrSMP is a vibrant Survival Multiplayer world where creativity, collaboration, and epic builds thrive. Start your journey today!</p>
+</div>
+
+<footer>
+  &copy; 2025 FrSMP. All rights reserved.
+</footer>
+
+<script>
+function copyIP() {
+  navigator.clipboard.writeText("play.frsmp.net")
+    .then(() => {
+      const button = document.getElementById('copyButton');
+      button.textContent = "Copied!";  // Change button text
+      setTimeout(() => {
+        button.textContent = "Copy IP";  // Revert back after 2 seconds
+      }, 2000);
+    })
+    .catch(() => alert('Failed to copy IP.'));
+}
+</script>
+
+</body>
+</html>
