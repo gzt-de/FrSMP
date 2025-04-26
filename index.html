@@ -72,8 +72,8 @@
       gap: 2rem;
     }
 
-    /* Left Side (Player List) */
-    .player-list {
+    /* Social Media Section */
+    .socials {
       flex: 1;
       margin-top: 2rem;
       padding: 1.5rem;
@@ -86,26 +86,38 @@
       max-width: 400px;
     }
 
-    .player-list h2 {
+    .socials h2 {
       margin-bottom: 1rem;
       font-size: 1.8rem;
     }
 
-    .player-list ul {
+    .socials ul {
       list-style: none;
       padding: 0;
     }
 
-    .player-list li {
+    .socials li {
       padding: 0.5rem 0;
       border-bottom: 1px solid #444;
     }
 
-    .player-list li:last-child {
+    .socials li:last-child {
       border-bottom: none;
     }
 
-    /* Right Side (IP Box with Server Rules) */
+    .socials a {
+      color: #00a8ff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      display: block;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: #0097e6;
+    }
+
+    /* IP Box (right side) */
     .ip-box {
       width: 100%;
       max-width: 300px;
@@ -209,7 +221,7 @@
         align-items: center;
       }
 
-      .player-list, .ip-box {
+      .socials, .ip-box {
         width: 90%; /* Allow elements to take up more space on small screens */
         max-width: none;
       }
@@ -244,11 +256,14 @@
 
 <main>
   <div class="container">
-    <!-- Active Player List (left side) -->
-    <div class="player-list">
-      <h2>Active Players</h2>
-      <ul id="playerList">
-        <!-- Players will be populated here dynamically -->
+    <!-- Social Media Section (left side) -->
+    <div class="socials">
+      <h2>Follow Us</h2>
+      <ul>
+        <li><a href="https://twitter.com/yourserver" target="_blank">Twitter</a></li>
+        <li><a href="https://facebook.com/yourserver" target="_blank">Facebook</a></li>
+        <li><a href="https://instagram.com/yourserver" target="_blank">Instagram</a></li>
+        <li><a href="https://discord.gg/yourserver" target="_blank">Discord</a></li>
       </ul>
     </div>
 
@@ -256,7 +271,7 @@
     <div class="ip-box">
       <button id="copyButton" onclick="copyIP()">Copy IP</button>
 
-      <!-- Server Rules inside IP Box -->
+      <!-- Server Rules inside the IP Box -->
       <div class="server-rules">
         <h3>Server Rules</h3>
         <ul>
@@ -281,37 +296,6 @@
 </footer>
 
 <script>
-  // Function to fetch and display active players using MCAPI
-  function fetchActivePlayers() {
-    const serverIP = 'effect-walter.gl.joinmc.link'; // Your server's IP
-    const serverPort = 25565; // Default Minecraft port, change if necessary
-
-    fetch(`https://mcapi.us/server/status?ip=${serverIP}&port=${serverPort}`)
-      .then(response => response.json())
-      .then(data => {
-        const playerList = document.getElementById("playerList");
-        playerList.innerHTML = ""; // Clear existing list
-
-        if (data.online && data.players.now > 0) {
-          // Loop through players and display their names
-          data.players.list.forEach(player => {
-            const li = document.createElement("li");
-            li.textContent = player; // Add player name to the list
-            playerList.appendChild(li);
-          });
-        } else {
-          // If no players are online
-          const li = document.createElement("li");
-          li.textContent = "No players online";
-          playerList.appendChild(li);
-        }
-      })
-      .catch(err => console.error('Error fetching player list:', err));
-  }
-
-  // Load players when the page loads
-  window.onload = fetchActivePlayers;
-
   function copyIP() {
     navigator.clipboard.writeText("effect-walter.gl.joinmc.link")
       .then(() => {
